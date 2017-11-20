@@ -1,0 +1,8 @@
+{
+    "name": "electron-app",
+    "version": "0.0.1",
+    "main": "main.js",
+    "dependencies": {
+        "background-blur": "^0.1.3"
+    }
+}
