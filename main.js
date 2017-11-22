@@ -1,7 +1,11 @@
 const electron = require('electron');
 // 控制应用生命周期的模块。
 // 创建原生浏览器窗口的模块。
-const { app, BrowserWindow, Menu } = electron;
+const {
+    app,
+    BrowserWindow,
+    Menu
+} = electron;
 
 // 保持一个对于 window 对象的全局引用，如果你不这样做，
 // 当 JavaScript 对象被垃圾回收， window 会被自动地关闭
@@ -9,19 +13,34 @@ let mainWindow;
 
 function createWindow() {
     // 创建浏览器窗口。
-    mainWindow = new BrowserWindow({ width: 960, height: 600 });
+    mainWindow = new BrowserWindow({
+        width: 960,
+        height: 600
+    });
 
     // 定义图标右键菜单。
     app.addRecentDocument('/Users/guoxun/style.scss');
-    const dockMenu = Menu.buildFromTemplate([
-        { label: 'New Window', click() { console.log('New Window'); } },
-        { label: 'New Window with Settings', submenu: [
-          { label: 'Basic' },
-          { label: 'Pro'}
-        ]},
-        { label: 'New Command...'}
-      ]);
-      app.dock.setMenu(dockMenu);
+    const dockMenu = Menu.buildFromTemplate([{
+            label: 'New Window',
+            click() {
+                console.log('New Window');
+            }
+        },
+        {
+            label: 'New Window with Settings',
+            submenu: [{
+                    label: 'Basic'
+                },
+                {
+                    label: 'Pro'
+                }
+            ]
+        },
+        {
+            label: 'New Command...'
+        }
+    ]);
+    app.dock.setMenu(dockMenu);
 
     // 加载应用的 index.html。
     mainWindow.loadURL(`file://${__dirname}/index.html`);
