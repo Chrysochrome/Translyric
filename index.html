@@ -24,10 +24,9 @@
         <div ng-controller="SearchController">
             <input type="text" ng-model="SearchText">
             <button ng-click="SearchSongs()"> 搜索 </button>
-            <span ng-repeat="x in SearchResult">
-                <br>
+            <div ng-repeat="x in SearchResult">
                 名称: {{ x.name }}  歌手: {{ x.artists[0].name }}  专辑: {{ x.album.name }}
-            </span>
+            </div>
         </div>
     </div>
 
