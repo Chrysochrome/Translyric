@@ -1,3 +1,4 @@
 [submodule "NeteaseCloudMusicApi"]
 	path = NeteaseCloudMusicApi
 	url = https://github.com/g1084164986/NeteaseCloudMusicApi.git
+	ignore = dirty
