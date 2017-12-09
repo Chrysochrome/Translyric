@@ -3,106 +3,49 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
-    <!-- <script src="jquery.min.js"></script> -->
+    <title>Translayric</title>
     <script>
         if (typeof module === 'object') {
             window.module = module;
             module = undefined;
         }
-
     </script>
-    <script src="node_modules/jquery/dist/jquery.js"></script>
-    <script src="node_modules/background-blur/dist/background-blur.js"></script>
+    <script src="js/angular.min.js"></script>
     <script>
         if (window.module) module = window.module;
-
     </script>
 
-    <style>
-        .bg-blur {
-            height: 600px;
-        }
-
-        .blur-image {
-            height: 600px;
-        }
-
-    </style>
 </head>
 
 <body>
-    <!-- <div class="part titlebar" id="workbench.parts.titlebar" role="contentinfo" style="color: rgb(107, 113, 125); background-color: rgb(40, 44, 52); font-size: 12px; width: 1232px; height: 22px;" aria-hidden="false">
-        <div class="window-title">main.js — ElectronApp</div>
-        <a href="javascript:window.close()">close</a>
-    </div> -->
-    <h1>Hello World!</h1>
-    We are using node
-    <script>
-        document.write(process.versions.node)
 
-    </script>, Chrome
-    <script>
-        document.write(process.versions.chrome)
-
-    </script>, and Electron
-    <script>
-        document.write(process.versions.electron)
-
-    </script>.
-    <script>
-        // var myNotification = new Notification('Fuck', {
-        //     body: '12345678'
-        // });
-
-        // myNotification.onclick = function() {
-        //     console.log('Notification clicked')
-        // }
-
-        // var alertOnlineStatus = function() {
-        //     window.alert(navigator.onLine ? 'online' : 'offline');
-        // };
-
-        // window.addEventListener('online', alertOnlineStatus);
-        // window.addEventListener('offline', alertOnlineStatus);
-
-        // alertOnlineStatus();
-    </script>
-
-    <br>
-
-    <!-- <button onclick="window.open()">Hello!</button> -->
-    <h3>Drag file below.</h3>
-    <div id="holder">
-        <div id="blur-image" class="blur-image">
+    <div ng-app="Translyric">
+        <h1>Translayric</h1>
+        <div ng-controller="SearchController">
+            <input type="text" ng-model="SearchText">
+            <button ng-click="SearchSongs()"> 搜索 </button>
+            <div ng-repeat="x in SearchResult">
+                名称: {{ x.name }}  歌手: {{ x.artists[0].name }}  专辑: {{ x.album.name }}
+            </div>
         </div>
     </div>
-    <br>
-    <br>
-    <script>
-        var holder = document.getElementById('holder');
-        holder.ondragover = function() {
-            return false;
-        };
-        holder.ondragleave = holder.ondragend = function() {
-            return false;
-        };
-        holder.ondrop = function(e) {
-            e.preventDefault();
-            var file = e.dataTransfer.files[0];
-            console.log('File you dragged here is', file.path);
-            return false;
-        };
-
-    </script>
 
     <script>
-        $('#blur-image').backgroundBlur({
-            imageURL: 'https://ununsplash.imgix.net/photo-1429277096327-11ee3b761c93?q=75&fm=jpg&w=400&fit=max',
-            blurAmount: 40,
-            imageClass: 'bg-blur'
+        var app = angular.module('Translyric', []);
+        app.controller('SearchController', function ($scope, $http) {
+            $scope.SearchResult = [];
+            $scope.idSong = null;
+            $scope.SearchSongs = function () {
+                $http({
+                    method: 'GET',
+                    url: 'http://127.0.0.1:3000/search?keywords=' + $scope.SearchText
+                }).then(function successCallback(response) {
+                    $scope.SearchResult = response.data.result.songs;
+                }, function errorCallback(response) {
+                    // 请求失败执行代码
+                });
+            }
         });
-
     </script>
 </body>
 
